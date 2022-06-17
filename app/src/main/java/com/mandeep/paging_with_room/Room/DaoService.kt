@@ -15,4 +15,7 @@ interface DaoService {
 
     @Query("SELECT * FROM Item ")
     suspend fun queryItems():List<Item>
+
+    @Query("SELECT * FROM ITEM LIMIT :size OFFSET :offset")
+    suspend fun queryItemsWithOffset(size:Int, offset:Int):List<Item>
 }

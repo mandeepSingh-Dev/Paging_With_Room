@@ -12,7 +12,11 @@ import javax.inject.Inject
 @HiltViewModel
 class MyViewModel @Inject constructor(val mainRepositry: MainRepositry):ViewModel() {
 
-    val listData = Pager(PagingConfig(pageSize = 10)){
-        MyPagingSource(mainRepositry)
+    val listAllData = Pager(PagingConfig(pageSize = 10)){
+        MyPagingSource(mainRepositry,1)
+    }.flow.cachedIn(viewModelScope)
+
+    val listDataWithOffsetData = Pager(PagingConfig(pageSize = 10)){
+        MyPagingSource(mainRepositry,2)
     }.flow.cachedIn(viewModelScope)
 }

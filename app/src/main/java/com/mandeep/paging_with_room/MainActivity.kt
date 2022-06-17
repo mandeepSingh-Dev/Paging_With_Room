@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var mainRepositry: MainRepositry
 
+    lateinit var  myPagingDataAdapter:MyPagingDataAdapter
+
      val myViewModel :MyViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,23 +38,42 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+         myPagingDataAdapter = MyPagingDataAdapter(this)
 
-        val myPagingDataAdapter = MyPagingDataAdapter(this)
+        //getting all items from room then again getting all items then again so on
+         //showingItemsAll()
 
-        lifecycleScope.launch {
-            myViewModel.listData.collect {
-                myPagingDataAdapter.submitData(it)
-            }
-        }
+        //getting items in limit (load size) with offset(currentpage * loadsie)
+          showingItemswith_LIMIT_OFFSET()
 
-        binding.recyclerViewww.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewww.adapter = myPagingDataAdapter
+      /*  binding.recyclerViewww.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewww.adapter = myPagingDataAdapter*/
 
-       /* CoroutineScope(Dispatchers.Main).launch {
-            for (i in 0..49) {
+     /*   CoroutineScope(Dispatchers.Main).launch {
+            for (i in 0..2000) {
                 mainRepositry.insertItem(Item("Mandeep  $i"))
             }
         }*/
 
+    }
+
+    fun showingItemsAll(){
+          lifecycleScope.launch {
+              myViewModel.listAllData.collect {
+                  myPagingDataAdapter.submitData(it)
+              }
+          }
+        binding.recyclerViewww.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewww.adapter = myPagingDataAdapter
+    }
+
+    fun showingItemswith_LIMIT_OFFSET(){
+        lifecycleScope.launch {
+            myViewModel.listDataWithOffsetData.collect {
+                myPagingDataAdapter.submitData(it)
+            }
+        }
+        binding.recyclerViewww.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewww.adapter = myPagingDataAdapter
     }
 }

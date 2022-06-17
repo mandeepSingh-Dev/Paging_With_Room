@@ -13,7 +13,10 @@ class MainRepositry  @Inject constructor(val daoService: DaoService) {
 
     suspend fun queryItems():List<Item> = daoService.queryItems()
 
-  suspend fun insertItem(item:Item)
+    suspend fun queryItemsWithOffset(size:Int, offset:Int):List<Item> = daoService.queryItemsWithOffset(size,offset)
+
+
+    suspend fun insertItem(item:Item)
     {
         daoService.insert(item)
     }

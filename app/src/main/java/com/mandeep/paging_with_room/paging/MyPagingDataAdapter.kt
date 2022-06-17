@@ -2,6 +2,7 @@ package com.mandeep.paging_with_room.paging
 
 import android.content.ClipData
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,8 @@ class MyPagingDataAdapter(val context:Context):PagingDataAdapter<Item,MyPagingDa
 
         holder.nameTextVIew.text = item?.name
         holder.idTextView.text = item?.id.toString()
+
+        Log.d("Hello",item?.id.toString()+"   "+item?.name)
     }
 
 
